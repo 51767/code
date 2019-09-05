@@ -1,0 +1,46 @@
+def get_average(count, games):
+    avg_count = 0
+    if games == 1:
+        average = count[0]
+    else:
+        for i in count:
+            avg_count += i
+            average = avg_count / games
+    print('I averaged ', average, 'guesses per game for ', games, 'game(s).')
+
+
+given_number = int(input("Please enter a number n: "))
+if given_number <= 0:
+    given_number = int(input("Please provide a number higher than 0: "))
+min_num = 0
+max_num = given_number
+games = 1
+count = [0]
+
+while True:
+    guess = int((min_num + max_num)/2)
+    print('Is your number', guess, '?')
+    count[games - 1] += 1
+    a = input('Enter "h" to indicate the guess is too high. '              
+              'Enter "l" to indicate the guess is too low. '              
+              'Enter "c" to indicate I guess is correct.:\n')
+    if a == 'c':
+        print('Your number is ', guess)
+        print('It took me ', str(count[games - 1]), ' guesses!')
+        get_average(count, games)
+        play_again = input('Play again (y/n)? ')
+        play_again.strip().lower()
+        if play_again == "y":
+            games += 1
+            count.append(0)
+            max_num = given_number
+            min_num = 0
+        else:
+            break
+
+    elif a == 'h':
+        max_num = guess - 1
+    elif a == 'l':
+        min_num = guess + 1
+    else:
+        print('Please enter "h", "l" or "c"')
